@@ -1,0 +1,343 @@
+@font-face {
+  font-family: "Aileron";
+  src: local("Arial");
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#041535;
+  overflow-x:hidden;
+  color:white;
+}
+
+.section{
+  position:relative;
+  width:100%;
+  background:#041535;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  width:100%;
+  height:768px;
+  background:url("fundo.webp") center center/cover no-repeat;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+}
+
+.logo{
+  position:absolute;
+  left:105.6px;
+  top:401.7px;
+
+  font-family:"Aileron";
+  font-size:73px;
+  font-weight:700;
+
+  z-index:2;
+}
+
+.sublogo{
+  position:absolute;
+  left:123.4px;
+  top:518px;
+
+  font-family:"Aileron";
+  font-size:20px;
+  color:#9b9b9b;
+
+  z-index:2;
+}
+
+/* APRESENTAÇÃO */
+
+.robo-section{
+  height:768px;
+}
+
+.robo-img{
+  position:absolute;
+
+  width:673.9px;
+  height:401.1px;
+
+  left:40px;
+  top:163.9px;
+
+  object-fit:cover;
+}
+
+.robo-content{
+  position:absolute;
+  left:749.1px;
+  top:242.4px;
+  width:477.1px;
+}
+
+.robo-content h2{
+  font-family:"Aileron";
+  font-size:36px;
+  line-height:1.1;
+  margin-bottom:30px;
+}
+
+.robo-content p{
+  font-family:"Aileron";
+  font-size:15px;
+  line-height:1.5;
+}
+
+.download-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:181.3px;
+  height:52.2px;
+
+  background:#8f8f8f;
+  color:white;
+
+  text-decoration:none;
+
+  font-family:"Aileron";
+  font-size:16.6px;
+
+  margin-top:80px;
+}
+
+/* VANTAGENS */
+
+.vantagens{
+  height:768px;
+}
+
+.titulo-principal{
+  position:absolute;
+  left:76.8px;
+  top:76.8px;
+
+  font-family:"Aileron";
+  font-size:42px;
+}
+
+.vantagem{
+  position:absolute;
+  width:399.4px;
+}
+
+.vantagem span{
+  color:#9b9b9b;
+  font-size:30px;
+  font-family:"Aileron";
+  font-weight:700;
+}
+
+.vantagem h3{
+  display:inline-block;
+  margin-left:10px;
+
+  font-family:"Aileron";
+  font-size:26px;
+}
+
+.vantagem p{
+  margin-top:20px;
+
+  font-family:"Aileron";
+  font-size:14px;
+  line-height:1.6;
+}
+
+.v1{
+  left:76.8px;
+  top:173.1px;
+}
+
+.v2{
+  left:76.8px;
+  top:331.3px;
+}
+
+.v3{
+  left:76.8px;
+  top:489.5px;
+}
+
+.v4{
+  left:748px;
+  top:173.1px;
+}
+
+.vantagens-btn{
+  position:absolute;
+  left:982.2px;
+  top:582.8px;
+}
+
+/* INSTALAÇÃO */
+
+.instalacao{
+  height:768px;
+}
+
+.inst{
+  position:absolute;
+  width:399.4px;
+}
+
+.inst span{
+  color:#9b9b9b;
+  font-size:30px;
+  font-family:"Aileron";
+  font-weight:700;
+}
+
+.inst h3{
+  display:inline-block;
+  margin-left:10px;
+
+  font-family:"Aileron";
+  font-size:26px;
+}
+
+.inst p{
+  margin-top:20px;
+
+  font-family:"Aileron";
+  font-size:14px;
+  line-height:1.6;
+}
+
+.i1{
+  left:76.8px;
+  top:173.1px;
+}
+
+.i2{
+  left:76.8px;
+  top:331.3px;
+}
+
+.i3{
+  left:76.8px;
+  top:489.5px;
+}
+
+.i4{
+  left:748px;
+  top:173.1px;
+}
+
+.install-btn{
+  position:absolute;
+  left:982.2px;
+  top:582.8px;
+}
+
+/* CONTATO */
+
+.contato{
+  height:500px;
+}
+
+.contato h2{
+  position:absolute;
+
+  left:76.8px;
+  top:76.8px;
+
+  font-family:"Aileron";
+  font-size:42px;
+}
+
+.contato p{
+  position:absolute;
+
+  left:87px;
+  top:140px;
+
+  font-family:'Open Sans', sans-serif;
+  font-size:14px;
+}
+
+  /* PÁGINA DE ATIVAÇÃO */
+
+.ativacao-page{
+  width:100%;
+  height:768px;
+  background:#041535;
+  color:white;
+  position:relative;
+  font-family:"Aileron", Arial, sans-serif;
+}
+
+.ativacao-topo{
+  width:100%;
+  height:70px;
+  border-bottom:3px solid white;
+  display:flex;
+  align-items:center;
+  padding-left:40px;
+}
+
+.ativacao-topo h1{
+  font-size:42px;
+  font-weight:700;
+}
+
+.ativacao-form{
+  position:absolute;
+  top:185px;
+  left:50%;
+  transform:translateX(-50%);
+  width:340px;
+}
+
+.ativacao-form label{
+  display:block;
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.ativacao-form input{
+  width:100%;
+  height:32px;
+  margin-bottom:22px;
+  border:none;
+  outline:none;
+  padding:0 10px;
+  font-size:16px;
+}
+
+.btn-adquirir{
+  width:150px;
+  height:45px;
+  background:#8f8f8f;
+  color:white;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  font-size:16px;
+  font-weight:700;
+  margin-left:auto;
+}
+
+.btn-adquirir span{
+  font-size:26px;
+  line-height:0;
+}

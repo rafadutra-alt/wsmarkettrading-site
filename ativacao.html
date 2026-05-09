@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adquirir licença | WealthScope</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <section class="ativacao-page">
+
+    <header class="ativacao-topo">
+      <h1>Adquirir licença</h1>
+    </header>
+
+    <form class="ativacao-form" id="formAtivacao">
+
+      <label>Confirmar ID</label>
+      <input type="text" id="idRobo" name="id" readonly>
+
+      <label>Nome completo</label>
+      <input type="text" name="nome" required>
+
+      <label>Email ou telefone</label>
+      <input type="text" name="contato" required>
+
+      <button type="submit" class="btn-adquirir">
+        Adquirir <span>›</span>
+      </button>
+
+    </form>
+
+  </section>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const roboId = urlParams.get("id");
+
+    if (roboId) {
+      document.getElementById("idRobo").value = roboId;
+    }
+
+    document
+      .getElementById("formAtivacao")
+      .addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const nome = document.querySelector('input[name="nome"]').value;
+        const contato = document.querySelector('input[name="contato"]').value;
+        const mt5_id = document.getElementById("idRobo").value;
+
+        const resposta = await fetch("http://localhost:3000/adquirir", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            nome,
+            contato,
+            mt5_id
+          })
+        });
+
+        const dados = await resposta.json();
+
+        if (dados.sucesso) {
+          alert("Dados enviados com sucesso!");
+          window.location.href = "https://mpago.la/1oT4kgL";
+        }
+      });
+  </script>
+
+</body>
+</html>h
