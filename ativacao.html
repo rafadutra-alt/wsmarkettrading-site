@@ -50,7 +50,7 @@
         const contato = document.querySelector('input[name="contato"]').value;
         const mt5_id = document.getElementById("idRobo").value;
 
-        const resposta = await fetch("https://wsmarkettrading-site-1.onrender.com/check", {
+        const resposta = await fetch("https://wsmarkettrading-site-1.onrender.com/buy", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -65,8 +65,8 @@
         const dados = await resposta.json();
 
         if (dados.sucesso) {
-          alert("Dados enviados com sucesso!");
-          window.location.href = "https://mpago.la/1oT4kgL";
+          alert("Redirecionando para o pagamento...");;
+          window.location.href = dados.link;
         }
       });
   </script>
