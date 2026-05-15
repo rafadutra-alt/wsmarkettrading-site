@@ -1,11 +1,21 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
+const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 
 const app = express();
 
 const ADMIN_USER = "wsmarkettrading_admin";
 const ADMIN_PASS = "Rafa415263@";
+
+const SITE_URL = "https://wsmarkettrading-site-1.onrender.com";
+
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN
+});
+
+const preference = new Preference(client);
+const payment = new Payment(client);
 
 function protegerAdmin(req, res, next) {
   const auth = req.headers.authorization;
@@ -43,7 +53,7 @@ CREATE TABLE IF NOT EXISTS licencas (
 )
 `);
 
-// SALVAR LICENÇA
+// SALVAR LICENÇA MANUAL / ANTIGA
 app.post("/adquirir", (req, res) => {
 
   const { nome, contato, mt5_id } = req.body;
@@ -71,6 +81,125 @@ app.post("/adquirir", (req, res) => {
 
 });
 
+// GERAR PAGAMENTO MERCADO PAGO
+app.post("/buy", async (req, res) => {
+
+  const { nome, contato, mt5_id } = req.body;
+
+  if (!nome || !contato || !mt5_id) {
+    return res.status(400).json({
+      erro: "Nome, contato e MT5 ID são obrigatórios."
+    });
+  }
+
+  try {
+
+    db.run(
+      `
+      INSERT INTO licencas (nome, contato, mt5_id, status)
+      VALUES (?, ?, ?, ?)
+      `,
+      [nome, contato, mt5_id, "pendente"],
+      async function(err){
+
+        if(err){
+          return res.status(500).json({
+            erro: err.message
+          });
+        }
+
+        const body = {
+          items: [
+            {
+              title: "Licença WealthScope Market Trading",
+              quantity: 1,
+              currency_id: "BRL",
+              unit_price: 97
+            }
+          ],
+
+          external_reference: mt5_id,
+
+          notification_url: `${SITE_URL}/webhook`,
+
+          back_urls: {
+            success: `${SITE_URL}/success`,
+            failure: `${SITE_URL}/failure`,
+            pending: `${SITE_URL}/pending`
+          },
+
+          auto_return: "approved"
+        };
+
+        const resposta = await preference.create({ body });
+
+        res.json({
+          sucesso: true,
+          link: resposta.init_point
+        });
+
+      }
+    );
+
+  } catch(err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      erro: err.message
+    });
+
+  }
+
+});
+
+// WEBHOOK MERCADO PAGO
+app.post("/webhook", async (req, res) => {
+
+  try {
+
+    const type = req.body.type || req.body.topic;
+    const paymentId = req.body?.data?.id || req.query.id;
+
+    if (type === "payment" && paymentId) {
+
+      const pagamento = await payment.get({ id: paymentId });
+
+      if (pagamento.status === "approved") {
+
+        const mt5_id = pagamento.external_reference;
+
+        db.run(
+          `
+          UPDATE licencas
+          SET status = ?
+          WHERE mt5_id = ?
+          `,
+          ["ativo", mt5_id],
+          function(err) {
+            if (err) {
+              console.log("Erro ao ativar licença:", err.message);
+            } else {
+              console.log("Licença ativada automaticamente:", mt5_id);
+            }
+          }
+        );
+
+      }
+
+    }
+
+    res.sendStatus(200);
+
+  } catch(err) {
+
+    console.log("Erro no webhook:", err.message);
+    res.sendStatus(200);
+
+  }
+
+});
+
 // VERIFICAR LICENÇA
 app.get("/check", (req, res) => {
 
@@ -80,6 +209,8 @@ app.get("/check", (req, res) => {
     `
     SELECT * FROM licencas
     WHERE mt5_id = ?
+    ORDER BY id DESC
+    LIMIT 1
     `,
     [mt5_id],
     (err, row) => {

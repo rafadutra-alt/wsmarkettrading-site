@@ -50,7 +50,7 @@
         const contato = document.querySelector('input[name="contato"]').value;
         const mt5_id = document.getElementById("idRobo").value;
 
-        const resposta = await fetch("http://localhost:3000/adquirir", {
+        const resposta = await fetch("https://wsmarkettrading-site-1.onrender.com/check", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
