@@ -201,7 +201,7 @@ app.post("/webhook", async (req, res) => {
 });
 
 // VERIFICAR LICENÇA
-app.get("/check", (req, res) => {
+app.get("/buy", (req, res) => {
 
   const mt5_id = req.query.id;
 
