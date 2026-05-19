@@ -40,7 +40,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-const db = new sqlite3.Database("./database.db");
+const db = new sqlite3.Database("/var/data/database.db");
 
 // CRIAR TABELA
 db.run(`
