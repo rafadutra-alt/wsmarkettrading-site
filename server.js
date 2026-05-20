@@ -114,7 +114,7 @@ app.post("/buy", async (req, res) => {
               title: "Licença WealthScope Market Trading",
               quantity: 1,
               currency_id: "BRL",
-              unit_price: 1
+              unit_price: 259,90
             }
           ],
 
